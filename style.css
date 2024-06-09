@@ -1,0 +1,53 @@
+html {
+  --background: #747474;
+  --fontColor: #fff;
+}
+
+body {
+  background-color: var(--background);
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 0 20px;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--fontColor);
+}
+
+#pointsRow > td {
+  font-weight: 900;
+}
+
+img.card {
+  width: 100px;
+  aspect-ratio: 1/1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+button {
+  margin: 5px;
+}
+
+input[type=number] {
+  width: 50px;
+}
+
+input[type=text] {
+  width: 100px;
+}
+
+input[disabled] {
+  background-color: #f0f0f0;
+  color: #888;
+}/*# sourceMappingURL=style.css.map */
