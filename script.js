@@ -142,8 +142,6 @@ function endGame() {
     alert('Game Ended!');
 }
 
-
-
 function newRound() {
     const table = document.getElementById('playersTable');
     const headerRow = document.getElementById('headerRow');
@@ -173,8 +171,7 @@ function newRound() {
     for (let i = 0; i < playerCount; i++) {
         const newCell = document.createElement('td');
         const input = document.createElement('input');
-        input.type = 'text'; // Changed to text to allow negative sign
-        input.inputMode = 'numeric'; // Use numeric input mode to show numeric keypad
+        input.type = 'tel'; // Changed to tel to allow negative sign on mobile
         input.value = '';
         input.addEventListener('input', updateTotals);
         input.addEventListener('input', allowOnlyNumbers);
@@ -225,8 +222,7 @@ function loadGame() {
                 // Rounds
                 if (typeof cellData === 'object') {
                     const input = document.createElement('input');
-                    input.type = 'text'; // Changed to text to allow negative sign
-                    input.inputMode = 'numeric'; // Use numeric input mode to show numeric keypad
+                    input.type = 'tel'; // Changed to tel to allow negative sign on mobile
                     input.value = cellData.value;
                     input.addEventListener('input', allowOnlyNumbers);
                     input.addEventListener('keydown', handleEnterKey);
@@ -249,6 +245,7 @@ function loadGame() {
 
     updateTotals();
 }
+
 
 
 function updateTotals() {
@@ -324,6 +321,7 @@ function allowOnlyNumbers(event) {
         input.value = input.value.replace(/-/g, '');
     }
 }
+
 
 function handleEnterKey(event) {
     if (event.key === 'Enter') {
