@@ -55,6 +55,9 @@ html, body {
         box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
         z-index: 1000;
     }
+    button {
+        margin: 0 5px;
+    }
     #savedResults,
     #endGame {
         display: none;
