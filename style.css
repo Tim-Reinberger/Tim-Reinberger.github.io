@@ -3,27 +3,7 @@ html {
   --fontColor: #fff;
 }
 
-body {
-  background-color: var(--background);
-  max-width: 1680px;
-  margin: 0 auto;
-  padding: 0 20px;
-  font-family: "Roboto", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--fontColor);
-}
-
-#pointsRow > td {
-  font-weight: 900;
-}
-
-img.card {
-  width: 100px;
-  aspect-ratio: 1/1;
-}
-
+/* Existing styles */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -47,7 +27,45 @@ input[type=text] {
   width: 100px;
 }
 
-input[disabled] {
-  background-color: #f0f0f0;
-  color: #888;
+/* Ensure the body and html take full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure the table container takes available space */
+#tableContainer {
+  flex: 1;
+  overflow: auto;
+  padding-bottom: 60px; /* Adjust based on button height */
+}
+
+/* New styles */
+@media (max-width: 800px) {
+  table,
+  #tableContainer {
+    width: 100%;
+  }
+  td {
+    max-width: 80px;
+  }
+  input {
+    max-width: 70px;
+  }
+  .buttons {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+  #savedResults,
+  #endGame {
+    display: none;
+  }
 }/*# sourceMappingURL=style.css.map */

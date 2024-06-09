@@ -110,6 +110,7 @@ function endGame() {
     playerScores.sort((a, b) => b.score - a.score);
 
     const resultsContainer = document.createElement('div');
+    resultsContainer.id = 'savedResults';
     const resultsList = document.createElement('ol');
 
     playerScores.forEach(player => {
@@ -142,6 +143,7 @@ function endGame() {
 }
 
 
+
 function newRound() {
     const table = document.getElementById('playersTable');
     const headerRow = document.getElementById('headerRow');
@@ -172,6 +174,7 @@ function newRound() {
         const newCell = document.createElement('td');
         const input = document.createElement('input');
         input.type = 'text'; // Changed to text to allow negative sign
+        input.inputMode = 'numeric'; // Use numeric input mode to show numeric keypad
         input.value = '';
         input.addEventListener('input', updateTotals);
         input.addEventListener('input', allowOnlyNumbers);
@@ -223,6 +226,7 @@ function loadGame() {
                 if (typeof cellData === 'object') {
                     const input = document.createElement('input');
                     input.type = 'text'; // Changed to text to allow negative sign
+                    input.inputMode = 'numeric'; // Use numeric input mode to show numeric keypad
                     input.value = cellData.value;
                     input.addEventListener('input', allowOnlyNumbers);
                     input.addEventListener('keydown', handleEnterKey);
@@ -245,6 +249,7 @@ function loadGame() {
 
     updateTotals();
 }
+
 
 function updateTotals() {
     const table = document.getElementById('playersTable');
