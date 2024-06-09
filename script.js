@@ -3,6 +3,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     displaySavedResults();
 });
 
+function toggleSign(event) {
+    const input = event.target.previousElementSibling;
+    if (input && input.tagName === 'INPUT' && !input.disabled) {
+        let value = parseInt(input.value) || 0;
+        input.value = -value;
+        updateTotals();
+    }
+}
+
 function addPlayer() {
     let tableContainer = document.getElementById('tableContainer');
     let table = document.getElementById('playersTable');
@@ -46,12 +55,20 @@ function addPlayer() {
             if (row !== headerRow && row !== footerRow) {
                 const newCell = document.createElement('td');
                 const input = document.createElement('input');
-                input.type = 'number';
-                input.value = '0';
+                input.type = 'text'; // Changed to text to allow negative sign
+                input.inputMode = 'numeric'; // Use numeric input mode to show numeric keypad
+                input.value = '';
                 input.addEventListener('input', updateTotals);
                 input.addEventListener('input', allowOnlyNumbers);
                 input.addEventListener('keydown', handleEnterKey);
+
+                const toggleButton = document.createElement('button');
+                toggleButton.className = 'toggle-sign';
+                toggleButton.innerHTML = '±';
+                toggleButton.addEventListener('click', toggleSign);
+
                 newCell.appendChild(input);
+                newCell.appendChild(toggleButton);
                 row.appendChild(newCell);
             }
         });
@@ -153,15 +170,19 @@ function newRound() {
         return;
     }
 
-    // Disable inputs of all previous rounds
+    // Disable inputs and toggle buttons of all previous rounds
     const previousRounds = table.querySelectorAll('tr.round');
     previousRounds.forEach(round => {
         const inputs = round.querySelectorAll('input');
+        const toggleButtons = round.querySelectorAll('.toggle-sign');
         inputs.forEach(input => {
             if (input.value === '') {
                 input.value = '0';
             }
             input.setAttribute('disabled', 'true');
+        });
+        toggleButtons.forEach(button => {
+            button.setAttribute('disabled', 'true');
         });
     });
 
@@ -171,12 +192,20 @@ function newRound() {
     for (let i = 0; i < playerCount; i++) {
         const newCell = document.createElement('td');
         const input = document.createElement('input');
-        input.type = 'tel'; // Changed to tel to allow negative sign on mobile
+        input.type = 'text'; // Changed to text to allow negative sign
+        input.inputMode = 'numeric'; // Use numeric input mode to show numeric keypad
         input.value = '';
         input.addEventListener('input', updateTotals);
         input.addEventListener('input', allowOnlyNumbers);
         input.addEventListener('keydown', handleEnterKey);
+
+        const toggleButton = document.createElement('button');
+        toggleButton.className = 'toggle-sign';
+        toggleButton.innerHTML = '±';
+        toggleButton.addEventListener('click', toggleSign);
+
         newCell.appendChild(input);
+        newCell.appendChild(toggleButton);
         newRow.appendChild(newCell);
     }
 
@@ -222,7 +251,8 @@ function loadGame() {
                 // Rounds
                 if (typeof cellData === 'object') {
                     const input = document.createElement('input');
-                    input.type = 'tel'; // Changed to tel to allow negative sign on mobile
+                    input.type = 'text'; // Changed to text to allow negative sign
+                    input.inputMode = 'numeric'; // Use numeric input mode to show numeric keypad
                     input.value = cellData.value;
                     input.addEventListener('input', allowOnlyNumbers);
                     input.addEventListener('keydown', handleEnterKey);
@@ -231,7 +261,17 @@ function loadGame() {
                     } else {
                         input.addEventListener('input', updateTotals);
                     }
+
+                    const toggleButton = document.createElement('button');
+                    toggleButton.className = 'toggle-sign';
+                    toggleButton.innerHTML = '±';
+                    toggleButton.addEventListener('click', toggleSign);
+                    if (cellData.disabled) {
+                        toggleButton.setAttribute('disabled', 'true');
+                    }
+
                     cell.appendChild(input);
+                    cell.appendChild(toggleButton);
                 } else {
                     cell.textContent = cellData;
                 }
@@ -245,8 +285,6 @@ function loadGame() {
 
     updateTotals();
 }
-
-
 
 function updateTotals() {
     const table = document.getElementById('playersTable');
@@ -321,7 +359,6 @@ function allowOnlyNumbers(event) {
         input.value = input.value.replace(/-/g, '');
     }
 }
-
 
 function handleEnterKey(event) {
     if (event.key === 'Enter') {
