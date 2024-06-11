@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     loadGame();
-    displaySavedResults();
+    displayWinStats();
 });
 
 function toggleSign(event) {
@@ -105,14 +105,16 @@ function removePlayer() {
     }
 }
 
-function endGame() {
+function endGame(showPopup = true) {
     const table = document.getElementById('playersTable');
     const headerRow = document.getElementById('headerRow');
     const footerRow = document.getElementById('footerRow');
     const playerCount = headerRow ? headerRow.children.length : 0;
 
     if (playerCount === 0) {
-        alert('No players to rank.');
+        if (showPopup) {
+            alert('No players to rank.');
+        }
         return;
     }
 
@@ -143,10 +145,6 @@ function endGame() {
     const headline = document.createElement('h2');
     headline.textContent = `Game Ended on ${dateStr} at ${timeStr}`;
 
-    resultsContainer.appendChild(headline);
-    resultsContainer.appendChild(resultsList);
-    document.body.appendChild(resultsContainer);
-
     // Save the results to localStorage
     const previousResults = JSON.parse(localStorage.getItem('gameResults')) || [];
     previousResults.push({
@@ -156,10 +154,50 @@ function endGame() {
     });
     localStorage.setItem('gameResults', JSON.stringify(previousResults));
 
-    alert('Game Ended!');
+    if (showPopup) {
+        alert('Game Ended!');
+    }
+    displayWinStats(); // Update the win statistics after the game ends
 }
 
-function newRound() {
+
+function displayWinStats() {
+    const savedResults = JSON.parse(localStorage.getItem('gameResults')) || [];
+    const winCounts = {};
+
+    // Calculate win counts for each player
+    savedResults.forEach(result => {
+        let highestScore = -Infinity;
+        let winners = [];
+
+        result.results.forEach(player => {
+            if (!winCounts[player.name]) {
+                winCounts[player.name] = 0;
+            }
+            if (player.score > highestScore) {
+                highestScore = player.score;
+                winners = [player.name];
+            } else if (player.score === highestScore) {
+                winners.push(player.name);
+            }
+        });
+
+        // Increment win count for all winners
+        winners.forEach(winner => {
+            winCounts[winner] += 1;
+        });
+    });
+
+    // Update header row with win counts
+    const headerRow = document.getElementById('headerRow');
+    for (let i = 0; i < headerRow.children.length; i++) {
+        const playerName = headerRow.children[i].textContent.split(' ')[0];
+        const wins = winCounts[playerName] || 0;
+        headerRow.children[i].textContent = `${playerName} (${wins})`;
+    }
+}
+
+function newRound(triggeredByEnter = false) {
     const table = document.getElementById('playersTable');
     const headerRow = document.getElementById('headerRow');
     const footerRow = document.getElementById('footerRow');
@@ -212,6 +250,11 @@ function newRound() {
     table.insertBefore(newRow, footerRow);
     updateTotals();
     saveGame();
+
+    // If the new round was triggered by Enter key, focus the first input in the new round
+    if (triggeredByEnter) {
+        newRow.querySelector('input').focus();
+    }
 }
 
 function loadGame() {
@@ -373,32 +416,31 @@ function handleEnterKey(event) {
             inputs[currentIndex + 1].focus();
         } else {
             inputs[currentIndex].blur(); // Remove focus from the last input
-            newRound();
+            newRound(true); // Pass a flag to indicate this was triggered by Enter key
         }
         
         updateTotals();
     }
 }
 
-function displaySavedResults() {
-    const savedResults = JSON.parse(localStorage.getItem('gameResults')) || [];
-    const resultsContainer = document.createElement('div');
-    resultsContainer.id = 'savedResults';
+function newGame() {
+    if (confirm("Are you sure you want to start a new game? All scores will be reset.")) {
+        endGame(false); // End the current game without showing the popup
+        const table = document.getElementById('playersTable');
+        const headerRow = document.getElementById('headerRow');
+        const footerRow = document.getElementById('footerRow');
 
-    savedResults.forEach(result => {
-        const headline = document.createElement('h2');
-        headline.textContent = `Game Ended on ${result.date} at ${result.time}`;
+        // Remove all rows except the header and footer
+        while (table.rows.length > 2) {
+            table.deleteRow(1);
+        }
 
-        const resultsList = document.createElement('ol');
-        result.results.forEach(player => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${player.name}: ${player.score}`;
-            resultsList.appendChild(listItem);
-        });
+        // Reset footer row scores to 0
+        for (let i = 0; i < footerRow.children.length; i++) {
+            footerRow.children[i].textContent = '0';
+        }
 
-        resultsContainer.appendChild(headline);
-        resultsContainer.appendChild(resultsList);
-    });
-
-    document.body.appendChild(resultsContainer);
+        saveGame();
+    }
 }
+

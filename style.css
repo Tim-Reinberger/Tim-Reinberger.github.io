@@ -1,6 +1,9 @@
 html {
   --background: #747474;
   --fontColor: #fff;
+  --white: #fff;
+  --buttonColor: #007bff;
+  --buttonHover: #0056b3;
 }
 
 body {
@@ -15,13 +18,12 @@ body {
   color: var(--fontColor);
 }
 
-#footerRow > td {
-  font-weight: 900;
+header > * {
+  margin: 10px 0;
 }
 
-#savedResults,
-#endGame {
-  display: none;
+#footerRow > td {
+  font-weight: 900;
 }
 
 /* Existing styles */
@@ -37,10 +39,6 @@ th, td {
   position: relative;
 }
 
-button {
-  margin: 5px;
-}
-
 input[type=number], input[type=text] {
   width: 80px;
   margin-right: 20px; /* Ensure space for the toggle button */
@@ -50,13 +48,14 @@ input[type=number], input[type=text] {
 .toggle-sign {
   position: absolute;
   right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 40%;
+  transform: translateY(-60%);
   cursor: pointer;
   background: none;
   border: none;
   font-size: 1.2em;
   color: #007bff;
+  margin-left: 15px;
 }
 
 /* Ensure the body and html take full height */
@@ -72,6 +71,7 @@ html, body {
   flex: 1;
   overflow: auto;
   padding-bottom: 60px; /* Adjust based on button height */
+  margin-top: 50px;
 }
 
 /* New styles */
@@ -86,18 +86,39 @@ html, body {
   input {
     max-width: 70px;
   }
-  .buttons {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: white;
-    text-align: center;
-    padding: 10px;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-  }
   #savedResults {
     font-size: 0.8em;
     margin-bottom: 100px; /* Ensure enough space at the bottom for the fixed buttons */
   }
+}
+button {
+  margin: 5px;
+  padding: 5px;
+  cursor: pointer;
+  background-color: var(--buttonColor);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: var(--buttonHover);
+}
+
+.buttonElement {
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background: var(--white);
+}
+.buttonElement.top {
+  top: 0;
+}
+.buttonElement.bottom {
+  bottom: 0;
+}
+.buttonElement a {
+  color: var(--white);
+  text-decoration: none;
 }/*# sourceMappingURL=style.css.map */

@@ -5,16 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Points Counter</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="/assets/icons/favicon.svg" type="image/x-icon">
 </head>
 <body>
-    <div id="tableContainer"></div>
-    <div class="buttons">
-        <button onclick="addPlayer()">Add Player</button>
-        <button onclick="removePlayer()">Remove Last Player</button>
-        <button id="endGame" onclick="endGame()">End Game</button>
-        <button onclick="newRound()">New Round</button>
-        <button onclick="resetGame()">Reset Game</button>
+    <div class="buttonElement top" id="topButton">
+        <button onclick="addPlayer()">Neuer Spieler</button>
+        <button onclick="removePlayer()">Letzten Spieler entfernen</button>
+        <button id="endGame" onclick="endGame()">Spiel Beenden</button>
+        <button onclick="resetGame()">Tabelle zurücksetzen</button>
+        <button><a href="/ergebnis">Ergebnisse</a></button>
+
     </div>
-    <script src="script.js"></script>
+    <div id="tableContainer"></div>
+    <!-- <div id="winStats"></div> -->
+
+    <div id="resultsContainer"></div>
+
+    <div class="buttonElement bottom" id="bottomButton">
+        <button onclick="newGame()">Neues Spiel</button>
+        <button onclick="newRound()">Neue Runde</button>
+    </div>
+    <script src="/assets/scripts/script.js"></script>
+    <script src="/assets/scripts/offset.js"></script>
 </body>
 </html>

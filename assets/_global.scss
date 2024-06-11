@@ -17,13 +17,17 @@
 
  }
 
+ header > * {
+ 	margin: 10px 0;
+ }
+
 
  #footerRow > td {
  	font-weight: 900;
  	// color: red;
  }
 
- #savedResults,
- #endGame {
-	 display: none;
- }
+//  #savedResults,
+//  #endGame {
+// 	 display: none;
+//  }

@@ -9,10 +9,10 @@ th, td {
     text-align: center;
     position: relative;
 }
-button {
-    margin: 5px;
-}
-input[type="number"], input[type="text"] {
+
+
+        
+            input[type="number"], input[type="text"] {
     width: 80px;
     margin-right: 20px; /* Ensure space for the toggle button */
 }
@@ -21,13 +21,14 @@ input[type="number"], input[type="text"] {
 .toggle-sign {
     position: absolute;
     right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 40%;
+    transform: translateY(-60%);
     cursor: pointer;
     background: none;
     border: none;
     font-size: 1.2em;
     color: #007bff;
+    margin-left: 15px;
 }
 
 /* Ensure the body and html take full height */
@@ -43,6 +44,7 @@ html, body {
     flex: 1;
     overflow: auto;
     padding-bottom: 60px; /* Adjust based on button height */
+    margin-top: 50px;
 }
 
 /* New styles */
@@ -56,16 +58,6 @@ html, body {
     }
     input {
         max-width: 70px;
-    }
-    .buttons {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        background-color: white;
-        text-align: center;
-        padding: 10px;
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
     }
     #savedResults {
         font-size: 0.8em;
