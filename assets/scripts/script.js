@@ -1,7 +1,12 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     loadGame();
     displayWinStats();
+    currentPlayerIndex = 0; // Initialize the current player index
+    updatePlayerNameStyles(currentPlayerIndex); // Set the initial player name style
 });
+
+
+let currentPlayerIndex = 0;
 
 function toggleSign(event) {
     const input = event.target.previousElementSibling;
@@ -72,6 +77,11 @@ function addPlayer() {
                 row.appendChild(newCell);
             }
         });
+
+        // Set the first player name to italic if it's the first player being added
+        if (playerCount === 0) {
+            updatePlayerNameStyles(0);
+        }
 
         updateTotals();
         saveGame();
@@ -159,7 +169,6 @@ function endGame(showPopup = true) {
     }
     displayWinStats(); // Update the win statistics after the game ends
 }
-
 
 function displayWinStats() {
     const savedResults = JSON.parse(localStorage.getItem('gameResults')) || [];
@@ -440,7 +449,22 @@ function newGame() {
             footerRow.children[i].textContent = '0';
         }
 
+        // Update player name styles for the next player in a round-robin fashion
+        currentPlayerIndex = (currentPlayerIndex + 1) % headerRow.children.length;
+        updatePlayerNameStyles(currentPlayerIndex);
+
         saveGame();
     }
 }
 
+
+function updatePlayerNameStyles(currentPlayerIndex) {
+    const headerRow = document.getElementById('headerRow');
+    for (let i = 0; i < headerRow.children.length; i++) {
+        if (i === currentPlayerIndex) {
+            headerRow.children[i].style.fontStyle = 'italic';
+        } else {
+            headerRow.children[i].style.fontStyle = 'normal';
+        }
+    }
+}
