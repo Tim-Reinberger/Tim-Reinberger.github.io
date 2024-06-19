@@ -264,6 +264,10 @@ function newRound(triggeredByEnter = false) {
     if (triggeredByEnter) {
         newRow.querySelector('input').focus();
     }
+
+    // Update player name styles for the next player in a round-robin fashion
+    currentPlayerIndex = (currentPlayerIndex + 1) % headerRow.children.length;
+    updatePlayerNameStyles(currentPlayerIndex);
 }
 
 function loadGame() {
@@ -449,14 +453,11 @@ function newGame() {
             footerRow.children[i].textContent = '0';
         }
 
-        // Update player name styles for the next player in a round-robin fashion
-        currentPlayerIndex = (currentPlayerIndex + 1) % headerRow.children.length;
-        updatePlayerNameStyles(currentPlayerIndex);
-
         saveGame();
     }
-}
 
+    newRound(); // Start a new round after the game is reset
+}
 
 function updatePlayerNameStyles(currentPlayerIndex) {
     const headerRow = document.getElementById('headerRow');
@@ -468,3 +469,5 @@ function updatePlayerNameStyles(currentPlayerIndex) {
         }
     }
 }
+
+// TODO: Update Player Name Styles only when a new round is started and not when page is reloaded
