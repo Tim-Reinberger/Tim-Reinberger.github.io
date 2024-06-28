@@ -1,66 +1,73 @@
 /* Existing styles */
 table {
-    width: 100%;
-    border-collapse: collapse;
+	width: 100%;
+	border-collapse: collapse;
 }
-th, td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: center;
-    position: relative;
+th,
+td {
+	border: 1px solid black;
+	padding: 8px;
+	text-align: center;
+	position: relative;
 }
 
-
-        
-            input[type="number"], input[type="text"] {
-    width: 80px;
-    margin-right: 20px; /* Ensure space for the toggle button */
+input[type="number"],
+input[type="text"] {
+	width: 80px;
+	margin-right: 20px; /* Ensure space for the toggle button */
 }
 
 /* New toggle button styles */
 .toggle-sign {
-    position: absolute;
-    right: 5px;
-    top: 40%;
-    transform: translateY(-60%);
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-size: 1.2em;
-    color: #007bff;
-    margin-left: 15px;
+	position: absolute;
+	right: 5px;
+	top: 40%;
+	transform: translateY(-60%);
+	cursor: pointer;
+	background: none;
+	border: none;
+	font-size: 1.2em;
+	color: #007bff;
+	margin-left: 15px;
 }
 
 /* Ensure the body and html take full height */
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
+html,
+body {
+	height: 100%;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
 }
 
 /* Ensure the table container takes available space */
 #tableContainer {
-    flex: 1;
-    overflow: auto;
-    padding-bottom: 60px; /* Adjust based on button height */
-    margin-top: 50px;
+	flex: 1;
+	overflow: auto;
+	padding-bottom: 60px; /* Adjust based on button height */
+	margin-top: 50px;
 }
 
 /* New styles */
 @media (max-width: 800px) {
-    table,
-    #tableContainer {
-        width: 100%;
-    }
-    td {
-        max-width: 80px;
-    }
-    input {
-        max-width: 70px;
-    }
-    #savedResults {
-        font-size: 0.8em;
-        margin-bottom: 100px; /* Ensure enough space at the bottom for the fixed buttons */
-    }
+	table,
+	#tableContainer {
+		width: 100%;
+	}
+	td {
+		max-width: 80px;
+	}
+	input {
+		max-width: 70px;
+	}
+	#savedResults {
+		font-size: 0.8em;
+		margin-bottom: 100px; /* Ensure enough space at the bottom for the fixed buttons */
+	}
+}
+
+.current-player {
+    background-color: var(--buttonColor);
+    color: var(--white);
+    font-weight: 700;
 }
