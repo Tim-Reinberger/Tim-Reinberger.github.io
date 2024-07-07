@@ -7,14 +7,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
     if (!localStorage.getItem('currentPlayerIndex')) {
         currentPlayerIndex = 0;
         localStorage.setItem('currentPlayerIndex', currentPlayerIndex);
-        console.log('currentPlayerIndex is defined in localStorage:', currentPlayerIndex);
+        // console.log('currentPlayerIndex is defined in localStorage:', currentPlayerIndex);
     } else {
         currentPlayerIndex = parseInt(localStorage.getItem('currentPlayerIndex'), 10);
-        console.log('currentPlayerIndex already exists in localStorage with value:', currentPlayerIndex);
+        // console.log('currentPlayerIndex already exists in localStorage with value:', currentPlayerIndex);
     }
 
-    console.log('currentPlayerIndex in script:', currentPlayerIndex);
-
+    // console.log('currentPlayerIndex in script:', currentPlayerIndex);
     const activePlayer = localStorage.getItem("currentActivePlayer");
     if (activePlayer !== null) {
         updatePlayerNameStyles(parseInt(activePlayer, 10));
@@ -128,61 +127,61 @@ function removePlayer() {
 	}
 }
 
-function endGame(showPopup = true) {
-	const table = document.getElementById("playersTable");
-	const headerRow = document.getElementById("headerRow");
-	const footerRow = document.getElementById("footerRow");
-	const playerCount = headerRow ? headerRow.children.length : 0;
+// function endGame(showPopup = true) {
+// 	const table = document.getElementById("playersTable");
+// 	const headerRow = document.getElementById("headerRow");
+// 	const footerRow = document.getElementById("footerRow");
+// 	const playerCount = headerRow ? headerRow.children.length : 0;
 
-	if (playerCount === 0) {
-		if (showPopup) {
-			alert("No players to rank.");
-		}
-		return;
-	}
+// 	if (playerCount === 0) {
+// 		if (showPopup) {
+// 			alert("No players to rank.");
+// 		}
+// 		return;
+// 	}
 
-	const playerScores = [];
+// 	const playerScores = [];
 
-	for (let i = 0; i < playerCount; i++) {
-		const playerName = headerRow.children[i].textContent.split(" ")[0]; // Get the original name without the rank
-		const playerTotal =
-			parseInt(footerRow.children[i].textContent.split(" ")[0]) || 0; // Get the total score without the rank
-		playerScores.push({ name: playerName, score: playerTotal });
-	}
+// 	for (let i = 0; i < playerCount; i++) {
+// 		const playerName = headerRow.children[i].textContent.split(" ")[0]; // Get the original name without the rank
+// 		const playerTotal =
+// 			parseInt(footerRow.children[i].textContent.split(" ")[0]) || 0; // Get the total score without the rank
+// 		playerScores.push({ name: playerName, score: playerTotal });
+// 	}
 
-	playerScores.sort((a, b) => b.score - a.score);
+// 	playerScores.sort((a, b) => b.score - a.score);
 
-	const resultsContainer = document.createElement("div");
-	resultsContainer.id = "savedResults";
-	const resultsList = document.createElement("ol");
+// 	const resultsContainer = document.createElement("div");
+// 	resultsContainer.id = "savedResults";
+// 	const resultsList = document.createElement("ol");
 
-	playerScores.forEach((player) => {
-		const listItem = document.createElement("li");
-		listItem.textContent = `${player.name}: ${player.score}`;
-		resultsList.appendChild(listItem);
-	});
+// 	playerScores.forEach((player) => {
+// 		const listItem = document.createElement("li");
+// 		listItem.textContent = `${player.name}: ${player.score}`;
+// 		resultsList.appendChild(listItem);
+// 	});
 
-	// Create a headline with the current date and time
-	const now = new Date();
-	const dateStr = now.toISOString().split("T")[0]; // Format YYYY-MM-DD
-	const timeStr = now.toTimeString().split(" ")[0].substring(0, 5); // Format HH:MM
-	const headline = document.createElement("h2");
-	headline.textContent = `Game Ended on ${dateStr} at ${timeStr}`;
+// 	// Create a headline with the current date and time
+// 	const now = new Date();
+// 	const dateStr = now.toISOString().split("T")[0]; // Format YYYY-MM-DD
+// 	const timeStr = now.toTimeString().split(" ")[0].substring(0, 5); // Format HH:MM
+// 	const headline = document.createElement("h2");
+// 	headline.textContent = `Game Ended on ${dateStr} at ${timeStr}`;
 
-	// Save the results to localStorage
-	const previousResults = JSON.parse(localStorage.getItem("gameResults")) || [];
-	previousResults.push({
-		date: dateStr,
-		time: timeStr,
-		results: playerScores,
-	});
-	localStorage.setItem("gameResults", JSON.stringify(previousResults));
+// 	// Save the results to localStorage
+// 	const previousResults = JSON.parse(localStorage.getItem("gameResults")) || [];
+// 	previousResults.push({
+// 		date: dateStr,
+// 		time: timeStr,
+// 		results: playerScores,
+// 	});
+// 	localStorage.setItem("gameResults", JSON.stringify(previousResults));
 
-	if (showPopup) {
-		alert("Game Ended!");
-	}
-	displayWinStats(); // Update the win statistics after the game ends
-}
+// 	if (showPopup) {
+// 		alert("Game Ended!");
+// 	}
+// 	displayWinStats(); // Update the win statistics after the game ends
+// }
 
 function displayWinStats() {
 	const savedResults = JSON.parse(localStorage.getItem("gameResults")) || [];
@@ -461,7 +460,7 @@ function newGame() {
 			"Are you sure you want to start a new game? All scores will be reset."
 		)
 	) {
-		endGame(false); // End the current game without showing the popup
+		// endGame(false); // End the current game without showing the popup
 		const table = document.getElementById("playersTable");
 		const headerRow = document.getElementById("headerRow");
 		const footerRow = document.getElementById("footerRow");
